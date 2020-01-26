@@ -100,7 +100,7 @@ class RepositoryService
     public function makeRepository(string $path, $fileContent)
     {
         if (!file_exists($path)) {
-            $this->files->put(dd($path), $fileContent);
+            $this->files->put($path, $fileContent);
             return true;
         } else {
             return false;
