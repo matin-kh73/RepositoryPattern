@@ -1,0 +1,59 @@
+<?php
+namespace App\Repositories;
+
+
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
+
+class BaseRepository implements BaseRepositoryInterface
+{
+    /**
+     * @var Model
+     */
+    private $model;
+
+    /**
+     * BaseRepository constructor.
+     *
+     * @param Model $model
+     */
+    public function __construct(Model $model)
+    {
+        $this->model = $model;
+    }
+
+    /**
+     * Get the query of the $model
+     *
+     * @return Builder
+     */
+    final public function getQuery()
+    {
+        return $this->model->newQuery();
+    }
+
+    /**
+     * Find specific entity with id
+     *
+     * @param int $id
+     * @param array $columns
+     * @return Builder|Builder[]|Collection|Model|null
+     */
+    public function find($id, $columns = array('*'))
+    {
+        return $this->getQuery()->find($id);
+    }
+
+    /**
+     * Find a specific entity with $field and $value
+     *
+     * @param $field
+     * @param $value
+     * @param array $columns
+     * @return Builder[]|Collection
+     */
+    public function findBy($field, $value, $columns = array('*'))
+    {
+        return $this->getQuery()->where($field, $value)->get($columns);
+    }
+}
