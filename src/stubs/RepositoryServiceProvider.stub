@@ -1,0 +1,18 @@
+<?php
+
+namespace App\Repositories;
+
+use Illuminate\Support\ServiceProvider;
+
+class RepositoryServiceProvider extends ServiceProvider
+{
+
+    public function register()
+    {
+        /**
+         * Register your Repository classes and interface here
+         * etc $this->app->bind(ModelRepositoryContract::class, YourRepositoryClass::class)
+         */
+        $this->app->bind();
+    }
+}

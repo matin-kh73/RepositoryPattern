@@ -1,0 +1,38 @@
+{
+    "name": "mtkh73/repo-handler",
+    "description": "optimize and make rewritable your project with the repository pattern",
+    "type": "library",
+    "license": "MIT",
+    "keywords": ["Laravel", "Repository", "pattern", "php"],
+    "authors": [
+        {
+            "name": "matin khaje khalili",
+            "email": "matin.khajekhalili@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Mtkh\\Repo\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Mtkh\\Repo\\Tests\\": "tests/"
+        }
+    },
+    "minimum-stability": "dev",
+    "require": {
+        "laravel/framework":"~5.8|6.*",
+        "php": "^7.1.3"
+    },
+    "require-dev": {
+        "orchestra/testbench": "~3.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Mtkh\\Repo\\RepositoryPackageServiceProvider"
+            ]
+        }
+    }
+}

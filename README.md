@@ -1,3 +1,11 @@
+<p align="center">
+<a href="https://travis-ci.org/matin-kh73/RepositoryPattern.svg?branch=master"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
+<a href="https://packagist.org/packages/mtkh73/repo-handler"><img src="https://poser.pugx.org/mtkh73/repo-handler/downloads" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/mtkh73/repo-handler"><img src="https://poser.pugx.org/mtkh73/repo-handler/v/stable" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://scrutinizer-ci.com/g/matin-kh73/RepositoryPattern/badges/code-intelligence.svg?b=master"></a>
+<a href="https://packagist.org/packages/mtkh73/repo-handler"><img src="https://poser.pugx.org/mtkh73/repo-handler/license" alt="License"></a>
+</p>
+
 ## About RepositoryPattern
 
 The Repository Pattern is one of the most popular patterns to create an enterprise level application. It restricts us to work directly with the data in the application and creates new layers for database operations, business logic, and the application’s UI. using the Repository Pattern has many advantages:
