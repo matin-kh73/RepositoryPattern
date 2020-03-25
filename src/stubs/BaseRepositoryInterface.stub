@@ -12,6 +12,21 @@ interface BaseRepositoryInterface
     public function getQuery();
 
     /**
+     * return all records of an entity with pagination
+     *
+     * @return mixed
+     */
+    public function getAll();
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param array $data
+     * @return mixed
+     */
+    public function store(array $data);
+
+    /**
      * Find specific entity with id
      *
      * @param int $id

@@ -4,13 +4,40 @@ namespace App\Repositories;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Mtkh\Repo\Services\Filter;
+use Prophecy\Exception\Doubler\ClassNotFoundException;
 
 class BaseRepository implements BaseRepositoryInterface
 {
     /**
+     * Number of items in a pagination data
+     */
+    const PER_PAGE = 15;
+
+    /**
+     * @var \Illuminate\Database\Eloquent\Builder
+     */
+    protected $query;
+
+    /**
      * @var Model
      */
-    private $model;
+    protected $model;
+
+    /**
+     * The filters used in the query
+     *
+     * @var array
+     */
+    protected $filters = [
+        'paginate' => self::PER_PAGE
+    ];
+
+    /**
+     * @var \Illuminate\Config\Repository
+     */
+    private $repoConfig;
 
     /**
      * BaseRepository constructor.
@@ -20,16 +47,110 @@ class BaseRepository implements BaseRepositoryInterface
     public function __construct(Model $model)
     {
         $this->model = $model;
+        $this->query = $model->newQuery();
+        $this->repoConfig = config('repository')['filters'];
+    }
+
+    /**
+     * Get the small collection filters
+     *
+     * @return array
+     */
+    public function getSmallCollectionFilters(): array
+    {
+        return $this->repoConfig['small-collection'];
+    }
+
+    /**
+     * Get the medium collection filters
+     *
+     * @return array
+     */
+    public function getMediumCollectionFilters(): array
+    {
+        return $this->repoConfig['medium-collection'];
+    }
+
+    /**
+     * Get the big collection filters
+     *
+     * @return array
+     */
+    public function getBigCollectionFilters(): array
+    {
+        return $this->repoConfig['big-collection'];
     }
 
     /**
      * Get the query of the $model
      *
-     * @return Builder
+     * @return \Illuminate\Database\Eloquent\Builder
      */
     final public function getQuery()
     {
-        return $this->model->newQuery();
+        return $this->query;
+    }
+
+    /**
+     * Get the model object
+     *
+     * @return Model
+     */
+    protected function getModel()
+    {
+        return $this->model;
+    }
+
+    /**
+     * Get the fillable attributes for the model.
+     *
+     * @return array
+     */
+    public function getFillable()
+    {
+        return $this->getModel()->getFillable();
+    }
+
+    /**
+     * Get the filters
+     *
+     * @return array
+     */
+    protected function getFilters()
+    {
+        return $this->filters;
+    }
+
+    /**
+     * @param $key
+     * @param mixed ...$value
+     * @return $this
+     */
+    public function setFilters($key, ...$value)
+    {
+        $this->filters[$key] = $value;
+        return $this;
+    }
+
+    /**
+     * return all records of an entity with pagination
+     *
+     * @return mixed
+     */
+    public function getAll()
+    {
+        return Filter::apply($this->getQuery(), $this->getFilters(), $this->getBigCollectionFilters());
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param array $data
+     * @return mixed
+     */
+    public function store(array $data)
+    {
+        return $this->getModel()->create($data);
     }
 
     /**
@@ -41,7 +162,7 @@ class BaseRepository implements BaseRepositoryInterface
      */
     public function find($id, $columns = array('*'))
     {
-        return $this->getQuery()->find($id);
+        return Filter::apply($this->getQuery()->select($columns), $this->getFilters(), $this->getSmallCollectionFilters())->find($id);
     }
 
     /**
@@ -50,10 +171,11 @@ class BaseRepository implements BaseRepositoryInterface
      * @param $field
      * @param $value
      * @param array $columns
-     * @return Builder[]|Collection
+     * @return Builder|Model|object
      */
     public function findBy($field, $value, $columns = array('*'))
     {
-        return $this->getQuery()->where($field, $value)->get($columns);
+        $query = $this->getQuery()->where($field, $value)->select($columns);
+        return Filter::apply($query, $this->getFilters(), $this->getSmallCollectionFilters())->first();
     }
 }
