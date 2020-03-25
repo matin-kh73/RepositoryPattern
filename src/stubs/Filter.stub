@@ -1,0 +1,21 @@
+<?php
+
+namespace App\Repositories\Filters;
+
+
+use Mtkh\Repo\Filters\BaseFilter;
+
+class DummyClass extends BaseFilter
+{
+
+    /**
+     * Apply your filter on the incoming query
+     *
+     * @param $args
+     * @return mixed
+     */
+    public function handle($args)
+    {
+        // TODO: Implement handle() method.
+    }
+}
