@@ -56,7 +56,7 @@ class BaseRepository implements BaseRepositoryInterface
      *
      * @return array
      */
-    public function getSmallCollectionFilters(): array
+    protected function getSmallCollectionFilters(): array
     {
         return $this->repoConfig['small-collection'];
     }
@@ -66,7 +66,7 @@ class BaseRepository implements BaseRepositoryInterface
      *
      * @return array
      */
-    public function getMediumCollectionFilters(): array
+    protected function getMediumCollectionFilters(): array
     {
         return $this->repoConfig['medium-collection'];
     }
@@ -76,7 +76,7 @@ class BaseRepository implements BaseRepositoryInterface
      *
      * @return array
      */
-    public function getBigCollectionFilters(): array
+    protected function getBigCollectionFilters(): array
     {
         return $this->repoConfig['big-collection'];
     }
@@ -86,7 +86,7 @@ class BaseRepository implements BaseRepositoryInterface
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    final public function getQuery()
+    final protected function getQuery()
     {
         return $this->query;
     }
@@ -136,6 +136,7 @@ class BaseRepository implements BaseRepositoryInterface
      * return all records of an entity with pagination
      *
      * @return mixed
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function getAll()
     {
@@ -159,6 +160,7 @@ class BaseRepository implements BaseRepositoryInterface
      * @param int $id
      * @param array $columns
      * @return Builder|Builder[]|Collection|Model|null
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function find($id, $columns = array('*'))
     {
@@ -172,6 +174,7 @@ class BaseRepository implements BaseRepositoryInterface
      * @param $value
      * @param array $columns
      * @return Builder|Model|object
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function findBy($field, $value, $columns = array('*'))
     {

@@ -1,7 +1,17 @@
 <?php
 namespace App\Repositories\DummyModel\Contracts;
 
-
+/**
+ * Interface DummyClassContract
+ * @package App\Repositories\DummyModel\Contracts
+ *
+ * @method getFillable()
+ * @method setFilters($key, ...$value)
+ * @method getAll()
+ * @method store(array $data)
+ * @method find($id, $columns = array('*'))
+ * @method findBy($field, $value, $columns = array('*'))
+ */
 interface DummyClassContract
 {
 

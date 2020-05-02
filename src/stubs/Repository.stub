@@ -2,9 +2,10 @@
 namespace App\Repositories\DummyModel;
 
 use DummyModelNamespace;
+use App\Repositories\DummyModel\Contracts\DummyClassContract;
 use App\Repositories\BaseRepository;
 
-class DummyClass extends BaseRepository
+class DummyClass extends BaseRepository implements DummyClassContract
 {
    /**
     * DummyClass constructor.
